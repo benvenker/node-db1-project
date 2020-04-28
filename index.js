@@ -35,6 +35,16 @@ server.put("/accounts/:name", (req, res) => {
   }
 });
 
+server.delete("/accounts/", (req, res) => {
+  if (req.body) {
+    db("accounts")
+      .where({ name: req.body.name })
+      .del()
+      .then((account) => res.status(200).json(account))
+      .catch((err) => res.status(500).json({ error: err }));
+  }
+});
+
 server.listen(PORT, () => {
   console.log(`\n== API running on port ${PORT} ==\n`);
 });
